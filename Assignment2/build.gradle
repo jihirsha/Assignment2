@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'myvote'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven{url "https://oss.sonatype.org/content/repositories/snapshots/"}
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile ("org.springframework.security:spring-security-web:3.2.6.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.mongodb:mongo-java-driver:3.0.0-rc1")
+
+    compile ("org.apache.kafka:kafka_2.10:0.8.2.1")
+    compile("org.springframework.integration:spring-integration-kafka:1.1.1.RELEASE")
+
+
+    testCompile("junit:junit")
+}
+    configurations.all {
+    //compile.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude module:'slf4j-log4j12'
+}
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.3'
+    }
